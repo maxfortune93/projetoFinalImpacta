@@ -1,13 +1,15 @@
-GET http://localhost:3000
+GET http://localhost:8090
 
 ###
-GET http://localhost:3000/users
+GET http://localhost:8090/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJtYW5vMTFAZXhhbXBsZS5jb20iLCJzdWIiOnsibmFtZSI6Ik1hbm8gdGVzdGUtMTEifSwiaWF0IjoxNjk0OTMwNjA3LCJleHAiOjE2OTQ5MzQyMDd9.d0VsaFlDcAYpyBBi6VfrkfUJlAtHAhqPVhh7mZI0nYE
+
 
 ###
-GET http://localhost:3000/users/4
+GET http://localhost:8090/users/4
 
 ###
-POST  http://localhost:3000/users
+POST  http://localhost:8090/users
 Content-Type: application/json
 
 {
@@ -18,7 +20,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH   http://localhost:3000/users/1
+PATCH   http://localhost:8090/users/1
 Content-Type: application/json
 
 {
@@ -28,5 +30,25 @@ Content-Type: application/json
 }
 
 ###
-DELETE    http://localhost:3000/users/14
+DELETE    http://localhost:8090/users/14
 Content-Type: application/json
+
+###
+POST  http://localhost:8090/auth-token/login
+Content-Type: application/json
+
+ {
+    "email": "mano11@example.com",
+    "password": "123456"
+ }
+
+###
+POST  http://localhost:8090/auth-token/register
+Content-Type: application/json
+
+{
+    "name": "Mano teste-11",
+    "email": "mano11@example.com",
+    "password": "123456",
+    "confirmPassword": "123456"
+}
