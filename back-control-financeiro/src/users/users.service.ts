@@ -3,10 +3,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
+// import { AuthTokenService } from 'src/auth-token/auth-token/auth-token.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prismaService: PrismaService) {}
+  constructor(
+    private prismaService: PrismaService,
+    private jwtService: JwtService, // private readonly authTokenservice: AuthTokenService,
+  ) {}
 
   async hashPassword(password: string) {
     const saltRounds = 10;
@@ -18,13 +23,23 @@ export class UsersService {
     } else {
       const { name, email, password } = createUserDto;
       const respPass = await this.hashPassword(password);
-      return this.prismaService.user.create({
+      const result = await this.prismaService.user.create({
         data: {
           name,
           password: respPass,
           email,
         },
       });
+      const payload = {
+        userEmail: result.email,
+        sub: {
+          name: result.name,
+        },
+      };
+      return {
+        name: result.name,
+        accessToken: this.jwtService.sign(payload),
+      };
     }
   }
 
