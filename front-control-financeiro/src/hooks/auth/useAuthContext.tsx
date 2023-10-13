@@ -29,11 +29,34 @@ export function UsersProvider({children}: UserProviderProps){
 
     const apiService = useApi();
 
+    // const authenticateUser = async (token: string) => {
+    //     try {
+    //         const user = await apiService.getUserData(token); // Substitua por uma chamada à API para obter dados do usuário usando o token
+    //         setUser(user);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         // Lida com erros ao autenticar usuário com token
+    //         console.error("Erro ao autenticar usuário:", error);
+    //         setLoading(false);
+    //     }
+    // };
+
+    // useEffect(() => {
+    //     const token = localStorage.getItem('authToken');
+    //     if (token) {
+    //         // Autentica automaticamente o usuário se um token estiver presente no localStorage
+    //         authenticateUser(token);
+    //     } else {
+    //         setLoading(false); // Se não houver token, a verificação está concluída
+    //     }
+    // }, []); // O segundo argumento vazio garante que este efeito seja executado apenas uma vez durante o carregamento inicial
+
+
     const signin = async (email: string, password: string) => {
-        const data = await apiService.login(email, password)
+        const data = await apiService.login(email, password);
         if(data.name && data.accessToken){
             setUser(data.name);
-            setToken(data.acessToken);
+            setToken(data.accessToken);
             return true;
         } 
         return false;
@@ -43,7 +66,7 @@ export function UsersProvider({children}: UserProviderProps){
         const data = await apiService.register(name, email, password, confirmPassword)
         if(data.name && data.accessToken){
             setUser(data.name);
-            setToken(data.acessToken);
+            setToken(data.accessToken);
             return true;
         } 
         return false;
@@ -55,7 +78,7 @@ export function UsersProvider({children}: UserProviderProps){
         setToken('');
     }
 
-    const setToken = async(token: string)=> {
+    const setToken = (token: string)=> {
         localStorage.setItem('authToken', token);
     }
     

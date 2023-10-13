@@ -53,7 +53,10 @@ const Register = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
+          <div>
+          <Button style={{background: 'red', marginRight: '10px'}} onClick={()=> navigate('/login')}>Voltar</Button>
           <Button type="submit">Registrar</Button>
+          </div>
         </RegisterForm>
     </RegisterContainer>
   );

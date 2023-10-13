@@ -1,9 +1,13 @@
 
+import { Dashboard } from "../Dashboard";
+import { Header } from "../Header";
+
 export function Teste() {
     return (
-      <h2>
-        Accesando pagina privado
-      </h2>
+      <>
+      <Header />
+      <Dashboard />
+      </>
     );
   }
   

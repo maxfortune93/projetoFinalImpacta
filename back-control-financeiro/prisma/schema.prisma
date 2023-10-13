@@ -15,4 +15,16 @@ model User {
   email     String  @unique
   name      String?  @db.VarChar(225)
   password  String  @db.VarChar(225)
+  transactions Transaction[]
+}
+
+model Transaction {
+  id        Int      @id @default(autoincrement())
+  title     String
+  amount    Float
+  type      String
+  category  String
+  createdAt DateTime
+  userId    Int      
+  user      User     @relation(fields: [userId], references: [id])
 }

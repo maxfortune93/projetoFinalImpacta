@@ -30,13 +30,14 @@ export class AuthTokenService {
   async login(userDto: CreateUserDto) {
     // const result = await this.validateUser(userDto);
     const payload = {
-      userEmail: userDto.email,
+      userName: userDto.name,
       sub: {
-        name: userDto.name,
+        name: userDto.email,
       },
     };
     return {
       name: userDto.name,
+      email: userDto.email,
       accessToken: this.jwtService.sign(payload),
     };
   }

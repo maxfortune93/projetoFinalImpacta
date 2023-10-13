@@ -2,7 +2,7 @@ GET http://localhost:8090
 
 ###
 GET http://localhost:8090/users
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJtYW5vMTFAZXhhbXBsZS5jb20iLCJzdWIiOnsibmFtZSI6Ik1hbm8gdGVzdGUtMTEifSwiaWF0IjoxNjk0OTMwNjA3LCJleHAiOjE2OTQ5MzQyMDd9.d0VsaFlDcAYpyBBi6VfrkfUJlAtHAhqPVhh7mZI0nYE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRW1haWwiOiJtYW5vMEBleGFtcGxlLmNvbSIsInN1YiI6eyJuYW1lIjoiTWFubyB0ZXN0ZS0wIn0sImlhdCI6MTY5NzA3NzEzMCwiZXhwIjoxNjk3MDgwNzMwfQ.ljdGiN8fZpMx9qRyZ7yuQs5EL4s6BAU3mcX5ljshEdI
 
 
 ###
@@ -11,6 +11,7 @@ GET http://localhost:8090/users/4
 ###
 POST  http://localhost:8090/users
 Content-Type: application/json
+
 
 {
     "name": "Mano teste-0",
@@ -47,8 +48,52 @@ POST  http://localhost:8090/auth-token/register
 Content-Type: application/json
 
 {
-    "name": "Mano teste-11",
-    "email": "mano11@example.com",
+    "name": "Mano teste-13",
+    "email": "mano13@example.com",
     "password": "123456",
     "confirmPassword": "123456"
 }
+
+###
+POST  http://localhost:8090/transactions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbm8gdGVzdGUtMTMiLCJzdWIiOnsibmFtZSI6Im1hbm8xM0BleGFtcGxlLmNvbSJ9LCJpYXQiOjE2OTcwODA3NDUsImV4cCI6MTY5NzA4NDM0NX0.YyQ8RmiFaP8xQnqhYWZVi-jwrUm7mRhtGUVy4RfiSW4
+
+{ 
+      
+    "title": "Freelance de Limpeza ontem3",
+    "type": "deposit",
+    "category": "Bico",
+    "amount": 5300,
+    "createdAt": "2023-10-10T14:30:00Z"
+
+}
+
+###
+POST http://localhost:8090/transactions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbm8gdGVzdGUtMTMiLCJzdWIiOnsibmFtZSI6Im1hbm8xM0BleGFtcGxlLmNvbSJ9LCJpYXQiOjE2OTcwODcxOTEsImV4cCI6MTY5NzA5MDc5MX0.zarN_hfuUNhHxsULgpyU7jOiZWRBapY6YbQXBEYXjN8
+
+
+###
+GET  http://localhost:8090/transactions
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Ik1hbm8gdGVzdGUtMTMiLCJzdWIiOnsibmFtZSI6Im1hbm8xM0BleGFtcGxlLmNvbSJ9LCJpYXQiOjE2OTcwODcxOTEsImV4cCI6MTY5NzA5MDc5MX0.zarN_hfuUNhHxsULgpyU7jOiZWRBapY6YbQXBEYXjN8
+
+
+
+###
+PATCH   http://localhost:8090/transactions/2
+Content-Type: application/json
+
+{
+    "title": "Freelance de website",
+    "amount": 9500,
+    "type": "deposit",
+    "category": "Dev",
+    "createdAt": "2022-09-05T14:30:00.000Z"
+}
+
+###
+DELETE    http://localhost:8090/transactions/4
+Content-Type: application/json

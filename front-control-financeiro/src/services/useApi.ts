@@ -1,8 +1,20 @@
 import axios from 'axios';
 
+// export const api = axios.create({
+//     baseURL: process.env.base_url_backend,
+// });
+
 export const api = axios.create({
     baseURL: process.env.base_url_backend,
 });
+
+api.interceptors.request.use(async (config) => {
+    const token = localStorage.getItem('authToken');  
+    if(token){
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+})
 
 export const useApi = ()=>({
     validateToken: async (token: string)=>{

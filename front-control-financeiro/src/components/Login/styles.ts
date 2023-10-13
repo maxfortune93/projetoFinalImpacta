@@ -10,19 +10,32 @@ export const LoginContainer = styled.div`
 `;
 
 export const LoginForm = styled.form`
-width: 400px;
+  width: 400px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 20px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  h2{
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  p{
+    font-size: .9rem;
+    font-weight: 400;
+  }
 `;
 
 export const Input = styled.input`
+  margin-top: 5px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
