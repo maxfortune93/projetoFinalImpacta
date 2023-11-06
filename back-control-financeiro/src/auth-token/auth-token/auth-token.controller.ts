@@ -3,6 +3,7 @@ import { CreateUserDto } from '../../users/dto/create-user.dto';
 import { UsersService } from '../../users/users.service';
 import { AuthTokenService } from './auth-token.service';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
+import { JwtGuard } from '../guards/jwt-auth.guard';
 
 @Controller('auth-token')
 export class AuthTokenController {
@@ -20,6 +21,12 @@ export class AuthTokenController {
   @Post('login')
   async login(@Request() req) {
     return await this.authTokenService.login(req.user);
+  }
+
+  @UseGuards(JwtGuard)
+  @Post('protected')
+  async protectedRoute(@Request() req) {
+    return req.user;
   }
 
   // Login Sem AuthGuard

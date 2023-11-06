@@ -18,10 +18,11 @@ api.interceptors.request.use(async (config) => {
 
 export const useApi = ()=>({
     validateToken: async (token: string)=>{
-        return {
-            user: 'Marouane'
-        };
-        const response = await api.post('/validate', {token});
+        // return {
+        //     user: 'Marouane'
+        // };
+        const response = await api.post('http://localhost:8090/auth-token/protected', {token});
+        console.log(response)
         return response.data;
     },
 

@@ -22,34 +22,13 @@ interface UserContextData {
     signup: (name: string, email: string, password: string, confirmPassword: string) => Promise<boolean>;
 }
 
-const UsersContext = createContext<UserContextData>({} as UserContextData)
+export const UsersContext = createContext<UserContextData>({} as UserContextData)
 
 export function UsersProvider({children}: UserProviderProps){
     const [user, setUser] = useState<User | null>(null);
 
     const apiService = useApi();
 
-    // const authenticateUser = async (token: string) => {
-    //     try {
-    //         const user = await apiService.getUserData(token); // Substitua por uma chamada à API para obter dados do usuário usando o token
-    //         setUser(user);
-    //         setLoading(false);
-    //     } catch (error) {
-    //         // Lida com erros ao autenticar usuário com token
-    //         console.error("Erro ao autenticar usuário:", error);
-    //         setLoading(false);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     const token = localStorage.getItem('authToken');
-    //     if (token) {
-    //         // Autentica automaticamente o usuário se um token estiver presente no localStorage
-    //         authenticateUser(token);
-    //     } else {
-    //         setLoading(false); // Se não houver token, a verificação está concluída
-    //     }
-    // }, []); // O segundo argumento vazio garante que este efeito seja executado apenas uma vez durante o carregamento inicial
 
 
     const signin = async (email: string, password: string) => {
@@ -73,7 +52,6 @@ export function UsersProvider({children}: UserProviderProps){
     }
 
     const signout = async()=> {
-        // await apiService.logout();
         setUser(null);
         setToken('');
     }
@@ -81,20 +59,23 @@ export function UsersProvider({children}: UserProviderProps){
     const setToken = (token: string)=> {
         localStorage.setItem('authToken', token);
     }
-    
-    // useEffect(()=> {
-    //     const validateToken = async ()=>{
-    //         const storageData = localStorage.getItem('authToken');
-    //         if(storageData){
-    //             const data = await apiService.validateToken(storageData);
-    //             if(data.user){
-    //                 setUser(data.user);
-    //             }
-    //         }
 
-    //     }
-    //     validateToken();
-    // }, [apiService]);
+    const validateToken = async ()=>{
+        const storageData = localStorage.getItem('authToken');
+      
+        if(storageData){
+            const data = await apiService.validateToken(storageData);
+            if(data.name || data.username){
+                setUser(data.username);
+                return true;
+            }
+        }
+    }
+
+    useEffect(()=> {       
+        validateToken()
+    },[]);
+    
 
     return (
         <UsersContext.Provider value={{ user, signin, signup, signout}}>
