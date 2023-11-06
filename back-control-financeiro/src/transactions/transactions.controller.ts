@@ -8,6 +8,7 @@ import {
   Delete,
   UseGuards,
   Request,
+  Query,
 } from '@nestjs/common';
 import { TransactionsService } from './transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
@@ -26,9 +27,13 @@ export class TransactionsController {
   }
   @UseGuards(JwtGuard)
   @Get()
-  findAll(@Request() req) {
+  findAll(
+    @Request() req,
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
     const userEmail = req.user.name;
-    return this.transactionsService.findAll(userEmail);
+    return this.transactionsService.findAll(userEmail, page, pageSize);
   }
 
   @Get(':id')

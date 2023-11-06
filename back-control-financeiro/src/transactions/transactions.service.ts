@@ -34,15 +34,28 @@ export class TransactionsService {
     }
   }
 
-  async findAll(userEmail: any) {
+  async findAll(userEmail: any, page: number, pageSize: number) {
     try {
       const getUser = await this.userService.findOneWithUserName(userEmail);
       if (getUser) {
+        const skip = (page - 1) * pageSize;
         const result = await this.prismaService.transaction.findMany({
           where: { userId: getUser.id },
+          skip: skip,
+          take: 20, // take: pageSize,
+          orderBy: { createdAt: 'desc' },
         });
 
-        return { message: 'success', transactions: result };
+        const totalTransactions = await this.prismaService.transaction.count({
+          where: { userId: getUser.id },
+          orderBy: { createdAt: 'asc' },
+        });
+
+        return {
+          message: 'success',
+          transactions: result,
+          totalTransactions: totalTransactions,
+        };
       }
     } catch (error) {
       return error;
