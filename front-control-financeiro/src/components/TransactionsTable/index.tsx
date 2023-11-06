@@ -83,20 +83,7 @@ function ButtonMenu(props: any) {
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
-            {/* <MenuItem onClick={handleClose}>
-              <Avatar /> Profile
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Avatar /> My account
-            </MenuItem>
-            <Divider /> */}
-            {/* <MenuItem onClick={handleClose}>
-              <ListItemIcon>
-                <PersonAdd fontSize="small" />
-              </ListItemIcon>
-              Add another account
-            </MenuItem> */}
-
+           
             <MenuItem style={menuFontSize} onClick={props.onEdit}>
               <ListItemIcon>
                 <CreateOutlinedIcon   fontSize="small" />
@@ -116,7 +103,7 @@ function ButtonMenu(props: any) {
       );
     }
     
-export function TransactionsTable() {
+export function TransactionsTable({ onTransactionDataChange }: any) {
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
@@ -139,19 +126,28 @@ export function TransactionsTable() {
     initialize();
   }
 
-  const initialize = async() => {
-    // const data = 'mano13@example.com'
+  const handleDataUpdate = (value:any) => {
+     onTransactionDataChange(value);
+};
+
+  const initialize = async () => {
     setLoading(true);
-    const transact = await getAllTransactions();
-    setTransactions(transact.transactions);
-    setLoading(false);
-  };
+    try {
+        const transact = await getAllTransactions();
+        handleDataUpdate(transact.transactions);
+        setTransactions(transact.transactions);
+    } catch (error) {
+        console.error('Erro ao obter transações:', error);
+    } finally {
+        setLoading(false);
+    }
+};
 
   const handleDelete = async (value: any) =>{ 
     const result = await deleteTransactions(value.id);
     if(result.message){
       navigate('/teste');
-      initialize();
+      await initialize();
     }
   }
 

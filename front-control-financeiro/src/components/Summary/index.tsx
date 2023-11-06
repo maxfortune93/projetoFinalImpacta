@@ -1,31 +1,12 @@
-import { useEffect, useState } from 'react';
 import income from '../../assets/income.svg';
 import outcome from '../../assets/outcome.svg';
 import total from '../../assets/total.svg';
 
 import { Container } from "./styles";
-import { useTransactionServices } from '../../services/useTransactionsServices';
 
-interface Transaction {
-    id: number;
-    title: string;
-    amount: number;
-    type: string;
-    category: string;
-    createdAt: string;
-  };
+export function Summary ({ transactionData }: any){
 
-export function Summary () {
-
-    const [transactions, setTransactions] = useState<Transaction[]>([]);
-    const { getAllTransactions } = useTransactionServices();
-
-    const initialize = async() => {
-        const transact = await getAllTransactions();
-        setTransactions(transact.transactions)
-      };
-
-      const summary = transactions.reduce((acc, transaction) => {
+      const summary = transactionData.reduce((acc:any, transaction:any) => {
         if (transaction.type === 'deposit') {
           acc.deposits += transaction.amount;
           acc.total += transaction.amount;
@@ -41,13 +22,9 @@ export function Summary () {
         total: 0
       });
 
-      useEffect(() => {
-        initialize();
-    }, []);
-    
-
     return(
-        <Container>
+      
+      <Container>
       <div>
         <header>
           <p>Entradas</p>
