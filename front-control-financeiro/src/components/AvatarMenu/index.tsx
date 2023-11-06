@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
@@ -9,11 +9,14 @@ import Tooltip from '@mui/material/Tooltip';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { menuFontSize } from "./styles";
-import { useUsersContext } from "../../hooks/auth/useAuthContext";
+import { UsersContext, useUsersContext } from "../../hooks/auth/useAuthContext";
 import { useNavigate } from "react-router-dom";
+import { Divider } from "@mui/material";
+
 
 export  function AvatarMenu() {
 
+  const { user } = useContext(UsersContext);
   
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const authLogout = useUsersContext();
@@ -29,6 +32,22 @@ export  function AvatarMenu() {
     authLogout.signout();
     navigate('/login');
   };
+
+  function obterIniciais(name: string) {
+    const partesDoNome = name.split(' ');
+
+    if (partesDoNome.length >= 2) {
+      const primeiraLetraPrimeiroNome = partesDoNome[0][0].toUpperCase();
+      const primeiraLetraUltimoNome = partesDoNome[partesDoNome.length - 1][0].toUpperCase();
+  
+      return primeiraLetraPrimeiroNome + primeiraLetraUltimoNome;
+    } else {
+      return null;
+    }
+  }
+
+  const iniciais = obterIniciais(user as any);
+  
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
@@ -46,7 +65,7 @@ export  function AvatarMenu() {
              sx={{ width: 40, height: 40 }}
              style={{fontSize: '1rem', fontWeight:'600', color: 'var(--blue)', backgroundColor: 'white'}}
              >
-                MM
+                {iniciais}
             </Avatar>
           </IconButton>
         </Tooltip>
@@ -88,12 +107,12 @@ export  function AvatarMenu() {
       >
         {/* <MenuItem onClick={handleClose}>
           <Avatar /> Profile
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Avatar /> My account
-        </MenuItem>
-        <Divider /> */}
-        {/* <MenuItem onClick={handleClose}>
+        </MenuItem> */}
+       
+        <h3 style={{alignItems: 'center', textAlign: 'center'}}>{user as any}</h3>
+        
+        <Divider />
+         {/* <MenuItem onClick={handleClose}>
           <ListItemIcon>
             <PersonAdd fontSize="small" />
           </ListItemIcon>
